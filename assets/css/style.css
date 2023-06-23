@@ -7,3 +7,10 @@
     width: 600px;
     height: 600px;
 }
+
+@media screen and (max-width:500px){
+    #canvas1 {
+        width:400px;
+        border: none;
+    }
+}
