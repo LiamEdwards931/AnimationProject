@@ -45,7 +45,7 @@ const animationState = [
         frames: 7,
     },
     {
-        name: 'crouch',
+        name: 'bite',
         frames: 7,
     },
     {
@@ -81,9 +81,9 @@ console.log(spriteAnimation);
 function animate(){
     ctx.clearRect(0, 0, canvas_Width, canvas_Height);
     // code below uses integers to calculate the frame - value 6 changes based on how many sprites are in the row.
-    let position = Math.floor(gameFrame/staggerFrame) % spriteAnimation['idle'].loc.length;
+    let position = Math.floor(gameFrame/staggerFrame) % spriteAnimation['sprint'].loc.length;
     let frameX = spriteWidth * position;
-    let frameY = spriteAnimation["idle"].loc[position].y;
+    let frameY = spriteAnimation["sprint"].loc[position].y;
     
     //ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh) - (image src variable, sx&y position of crop, sw & sh width and height of crop tool, d's are the same but for the cropped image)
     ctx.drawImage(playerImage, frameX, frameY , spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
