@@ -8,7 +8,24 @@
     <link rel ="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-   <canvas id ="canvas1"></canvas>
+   <!--Javascript run canvas for animation-->
+    <canvas id ="canvas1"></canvas>
+    <!--control section for the animation-->
+    <div class ="controls">
+        <label for = "animations">Choose the animation:</label>
+        <select id ="animations" name ="animations">
+            <option value ="idle">Idle</option>
+            <option value="jump">Jump</option>
+            <option value="fall">Fall</option>
+            <option value="sprint">Sprint</option>
+            <option value="dizzy">Dizzy</option>
+            <option value="lieDown">Lie down</option>
+            <option value="roll">Roll</option>
+            <option value="bite">Bite</option>
+            <option value="ko">KO</option>
+            <option value="getHit">Get Hit</option>
+        </select>
+    </div>
    <script src="assets/javascript/script.js"> 
    </script>
 </body>

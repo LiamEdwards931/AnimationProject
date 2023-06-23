@@ -1,3 +1,11 @@
+let playerState = "roll";
+const dropdown = document.getElementById('animations');
+dropdown.addEventListener('change', function (e) {
+    playerState = e.target.value;
+});
+
+
+
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 const canvas_Width = canvas.width = 600;
@@ -8,6 +16,7 @@ playerImage.src = 'assets/spritesheets/shadow_dog.png';
 //divide sprite sheet pixel width by the columns for width & rows for the height
 const spriteWidth = 575;
 const spriteHeight = 523;
+
 
 let gameFrame = 0;
 // this value changes to speed up or slow down animation (higher number = slower animation)
@@ -37,7 +46,7 @@ const animationState = [
         frames: 10,
     },
     {
-        name: 'lie down',
+        name: 'lieDown',
         frames: 5,
     },
     {
@@ -49,11 +58,11 @@ const animationState = [
         frames: 7,
     },
     {
-        name: 'jump into lie down',
+        name: 'ko',
         frames: 10,
     },
     {
-        name: 'look up',
+        name: 'getHit',
         frames: 4,
     }
 ];
@@ -65,12 +74,12 @@ const animationState = [
  */
 animationState.forEach((state, index) => {
     let frames = {
-        loc:[],
-    }
-    for(let a = 0; a < state.frames; a++){
+        loc: [],
+    };
+    for (let a = 0; a < state.frames; a++) {
         let positionX = a * spriteWidth;
         let positionY = index * spriteHeight;
-        frames.loc.push({x: positionX, y: positionY});
+        frames.loc.push({ x: positionX, y: positionY });
     }
     spriteAnimation[state.name] = frames;
 });
@@ -78,16 +87,16 @@ console.log(spriteAnimation);
 /**
  * Animates the main "dog character"
  */
-function animate(){
+function animate() {
     ctx.clearRect(0, 0, canvas_Width, canvas_Height);
     // code below uses integers to calculate the frame - value 6 changes based on how many sprites are in the row.
-    let position = Math.floor(gameFrame/staggerFrame) % spriteAnimation['sprint'].loc.length;
+    let position = Math.floor(gameFrame / staggerFrame) % spriteAnimation[playerState].loc.length;
     let frameX = spriteWidth * position;
-    let frameY = spriteAnimation["sprint"].loc[position].y;
-    
+    let frameY = spriteAnimation[playerState].loc[position].y;
+
     //ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh) - (image src variable, sx&y position of crop, sw & sh width and height of crop tool, d's are the same but for the cropped image)
-    ctx.drawImage(playerImage, frameX, frameY , spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
-    gameFrame++
+    ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
+    gameFrame++;
     requestAnimationFrame(animate);
 };
 animate();
