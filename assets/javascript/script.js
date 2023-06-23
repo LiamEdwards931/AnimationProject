@@ -1,26 +1,23 @@
-let playerState = "roll";
+let playerState = "idle";
 const dropdown = document.getElementById('animations');
 dropdown.addEventListener('change', function (e) {
     playerState = e.target.value;
 });
-
-
-
+//create the canvas and set it's context to 2D
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 const canvas_Width = canvas.width = 600;
 const canvas_Height = canvas.height = 600;
-
+//import the spritesheet
 const playerImage = new Image();
 playerImage.src = 'assets/spritesheets/shadow_dog.png';
 //divide sprite sheet pixel width by the columns for width & rows for the height
 const spriteWidth = 575;
 const spriteHeight = 523;
 
-
 let gameFrame = 0;
 // this value changes to speed up or slow down animation (higher number = slower animation)
-let staggerFrame = 5;
+let staggerFrame = 8;
 // array to store the animation frames
 const spriteAnimation = [];
 //array of objects containing the animation types
