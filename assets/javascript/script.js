@@ -12,27 +12,22 @@ const spriteHeight = 523;
 //variables to change the location of the crop on the spritesheet
 let frameX = 0;
 let frameY = 0;
+//
 let gameFrame = 0;
+// this value changes to speed up or slow down animation (higher number = slower animation)
 let staggerFrame = 5;
 /**
- * line 1 clears the canvas.
- * line 2 draws the sprite sheet
- * line 3 requests it be drawn over and over.
+ * Animates the main "dog character"
  */
 function animate(){
     ctx.clearRect(0, 0, canvas_Width, canvas_Height);
-    //ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
-    ctx.drawImage(playerImage, frameX * spriteWidth, frameY * spriteHeight , spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
-    
-    
-    //cycles through the columns of the sheet to create the animation
-    if(gameFrame % staggerFrame === 0){
-        if (frameX < 6) frameX++
-        else frameX = 0;
-    }
+    // code below uses integers to calculate the frame - value 6 changes based on how many sprites are in the row.
+    let position = Math.floor(gameFrame/staggerFrame) % 6;
+    frameX = spriteWidth * position;
+    //ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh) - (image src variable, sx&y position of crop, sw & sh width and height of crop tool, d's are the same but for the cropped image)
+    ctx.drawImage(playerImage, frameX, frameY * spriteHeight , spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
     gameFrame++
     requestAnimationFrame(animate);
 };
 animate();
 
-//Continue tutorial from 19:51.
