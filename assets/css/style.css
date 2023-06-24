@@ -8,7 +8,7 @@
     height: 600px;
 }
 
-ul{
+ul {
     margin-bottom: 50px;
 }
 
@@ -43,13 +43,13 @@ option {
 }
 
 #container {
-    position:absolute;
-    width:800px;
+    position: absolute;
+    width: 800px;
     height: 700px;
     transform: translate(-50%, -50%);
-    top:50%;
-    left:50%;
-    font-size:25px;
+    top: 50%;
+    left: 50%;
+    font-size: 25px;
 }
 
 #canvas2 {
@@ -57,16 +57,16 @@ option {
     width: 800px;
     height: 700px;
     top: 50%;
-    left:25%;
-   
+    left: 25%;
+
 }
 
 #slider {
-    width:100%;
+    width: 100%;
 }
 
-#container p{
-    color:white;
+#container p {
+    color: white;
 }
 
 
@@ -76,9 +76,10 @@ option {
     #canvas1 {
         width: 400px;
         border: none;
+        margin-top: 140px;
     }
 
     #canvas2 {
-        left:0;
+        left: -10px;
     }
 }
