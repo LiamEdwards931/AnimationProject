@@ -73,4 +73,8 @@ option {
         width: 400px;
         border: none;
     }
+
+    #canvas2 {
+        left:0;
+    }
 }
