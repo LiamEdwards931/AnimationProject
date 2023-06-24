@@ -23,10 +23,10 @@ const slider = document.getElementById('slider');
 slider.value = gameSpeed;
 const showGameSpeed = document.getElementById('showGameSpeed');
 showGameSpeed.innerHTML = gameSpeed;
-slider.addEventListener('change', function(e){
-    console.log(e);
+slider.addEventListener('change', function(e) {
     gameSpeed = e.target.value;
-}
+    showGameSpeed.innerHTML = e.target.value;
+});
 //create a class for the object properties to be called when they need to be changed using "this" in a constructor. aka 'blueprint' for layers
 class Layer {
     constructor(image, speedModifier) {
