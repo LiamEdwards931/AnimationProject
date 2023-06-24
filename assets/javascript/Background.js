@@ -18,6 +18,15 @@ backgroundLayer4.src = "assets/backgroundimages/layer-4.png";
 const backgroundLayer5 = new Image();
 backgroundLayer5.src = "assets/backgroundimages/layer-5.png";
 
+//slider for html
+const slider = document.getElementById('slider');
+slider.value = gameSpeed;
+const showGameSpeed = document.getElementById('showGameSpeed');
+showGameSpeed.innerHTML = gameSpeed;
+slider.addEventListener('change', function(e){
+    console.log(e);
+    gameSpeed = e.target.value;
+}
 //create a class for the object properties to be called when they need to be changed using "this" in a constructor. aka 'blueprint' for layers
 class Layer {
     constructor(image, speedModifier) {
