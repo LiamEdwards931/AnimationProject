@@ -8,6 +8,10 @@
     height: 600px;
 }
 
+ul{
+    margin-bottom: 50px;
+}
+
 #link li a {
     font-size: 25px;
     text-decoration: none;
