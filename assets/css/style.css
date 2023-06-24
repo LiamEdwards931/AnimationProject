@@ -8,13 +8,13 @@
     height: 600px;
 }
 
-#link li a{
+#link li a {
     font-size: 25px;
     text-decoration: none;
-    color:green;
+    color: green;
 }
 
-#link li{
+#link li {
     list-style-type: none;
 }
 
@@ -33,19 +33,39 @@ option {
 
 
 /*parallax background CSS*/
-#parallaxBackground{
-    background-color:black;
+#parallaxBackground {
+    background-color: black;
+    color: white;
+}
+
+#container {
+    position:absolute;
+    width:800px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    top:50%;
+    left:50%;
+    font-size:25px;
 }
 
 #canvas2 {
-    position:absolute;
-    border: solid 5px white;
-    width:800px;
-    height:700px;
-    transform:translate(-50%, -50%);
+    position: relative;
+   width: 800px;
+    height: 700px;
+    
     top: 50%;
-    left:50%;
+    left: 50%;
 }
+
+#slider {
+    width:100%;
+}
+
+#container p{
+    color:white;
+}
+
+
 
 /*dog animation media screen*/
 @media screen and (max-width:500px) {
