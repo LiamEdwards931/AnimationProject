@@ -69,6 +69,21 @@ option {
     color: white;
 }
 
+/*Enemy movement html css*/
+#enemymovementhtml {
+    background-color:red;
+}
+
+#canvas3 {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 1000px;
+    width: 500px;
+    border: 3px solid black;
+}
+
 
 
 /*dog animation media screen*/
@@ -79,6 +94,7 @@ option {
         margin-top: 140px;
     }
 
+    /*parallax background media screen*/
     #canvas2 {
         left: -10px;
     }
