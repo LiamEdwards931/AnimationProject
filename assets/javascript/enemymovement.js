@@ -4,15 +4,18 @@ const ctx = canvas.getContext('2d');
 canvasWidth = canvas.width = 500;
 canvasHeight = canvas.height = 1000;
 
-const enemyImage = new Image();
-enemyImage.src = 'assets/enemyimages/enemy1.png'
 //variable number of enemies + array to hold them.
 const numberOfEnemies = 100;
 const enemyArray = [];
 
+//Variable to control the animation speed
+let gameFrame = 5;
+
 //Create class for all enemies that will be created, random spawn points with Math.random();
 class Enemy{
     constructor(){
+        this.image = new Image();
+        this.image.src = 'assets/enemyimages/enemy1.png'
         this.x = Math.random() * canvasWidth;
         this.y = Math.random() * canvasHeight;
         this.spriteWidth = 293; // spritesheet width/ sprite rows
@@ -20,16 +23,20 @@ class Enemy{
         this.width = this.spriteWidth / 2.5;   //use this to scale enemies to a better size.
         this.height = this.spriteHeight / 2.5; //use this to scale the enemies to a better size.
         this.speed = Math.random() * 4 - 2
+        this.frame = 0;
+        this.flapSpeed = Math.floor(Math.random() * 3 + 1)
     }
     update(){
         this.x += this.speed;
         this.y += this.speed;
         //animate the sprites
-         
+        if(gameFrame % this.flapSpeed === 0){
+            this.frame > 4 ? this.frame = 0 : this.frame++;
+        }
+      
     }
     draw(){
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(enemyImage, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);//draws the sprite sheet
+        ctx.drawImage(this.image, this.frame * this.spriteWidth, 0,this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);//draws the sprite sheet
     }
 }   
 
@@ -45,7 +52,9 @@ function animate(){
         enemy.update();
         enemy.draw();
     });
+    gameFrame++
     requestAnimationFrame(animate);
+   
 }
 
 animate();
