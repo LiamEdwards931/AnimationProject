@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sprite-Animation Project</title>
-    <link rel ="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <nav>
-        <ul id = "link">
-            <li><a href = "index.html">Dog animation</a></li>
+        <ul id="link">
+            <li><a href="index.html">Dog animation</a></li>
             <li><a href="parallaxBackground.html">Parallax Background</a></li>
-            <li><a href ="enemymovement.html">Enemy Movement</a></li>
+            <li><a href="enemymovement.html">Enemy Movement</a></li>
         </ul>
     </nav>
     <!--Javascript run canvas for animation-->
-    <canvas id ="canvas1"></canvas>
+    <canvas id="canvas1"></canvas>
     <!--control section for the animation-->
-    <div class ="controls">
-        <label for = "animations">Choose the animation:</label>
-        <select id ="animations" name ="animations">
-            <option value ="idle">Idle</option>
+    <div class="controls">
+        <label for="animations">Choose the animation:</label>
+        <select id="animations" name="animations">
+            <option value="idle">Idle</option>
             <option value="jump">Jump</option>
             <option value="fall">Fall</option>
             <option value="sprint">Sprint</option>
@@ -33,7 +35,8 @@
             <option value="getHit">Get Hit</option>
         </select>
     </div>
-   <script src="assets/javascript/script.js"> 
-   </script>
+    <script src="assets/javascript/doganimation.js">
+    </script>
 </body>
+
 </html>
