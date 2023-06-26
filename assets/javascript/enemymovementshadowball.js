@@ -23,7 +23,7 @@ class Enemy {
         this.x = Math.random() * (canvasWidth - this.width); // keeps the enemy sprites in the canvas width
         this.y = Math.random() * (canvasHeight - this.height);// keeps the enemy sprites in the canvas height
         this.newX = Math.random() * (canvasWidth - this.width);
-        this.newY = Math.random() * (canvasHeight * this.height);
+        this.newY = Math.random() * (canvasHeight - this.height);
         this.speed = Math.random() * 4 + 1;
         this.frame = 0;
         this.flapSpeed = Math.floor(Math.random() * 3 + 1);
