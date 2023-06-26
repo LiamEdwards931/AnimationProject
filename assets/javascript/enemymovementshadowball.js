@@ -5,7 +5,7 @@ canvasWidth = canvas.width = 500;
 canvasHeight = canvas.height = 1000;
 
 //variable number of enemies + array to hold them.
-const numberOfEnemies = 100;
+const numberOfEnemies = 70;
 const enemyArray = [];
 
 //Variable to control the animation speed
@@ -16,26 +16,32 @@ class Enemy {
     constructor() {
         this.image = new Image();
         this.image.src = 'assets/enemyimages/enemy4.png';
-        this.spriteWidth = 266; // spritesheet width/ sprite rows
-        this.spriteHeight = 188; // spritesheet height/ sprite columns
+        this.spriteWidth = 213; // spritesheet width/ sprite rows
+        this.spriteHeight = 213; // spritesheet height/ sprite columns
         this.width = this.spriteWidth / 2.5;   //use this to scale enemies to a better size.
         this.height = this.spriteHeight / 2.5; //use this to scale the enemies to a better size.
         this.x = Math.random() * (canvasWidth - this.width); // keeps the enemy sprites in the canvas width
         this.y = Math.random() * (canvasHeight - this.height);// keeps the enemy sprites in the canvas height
-        this.newX = Math.random() * (canvas.width - this.width);
-        this.newY = Math.random() * (canvas.height * this.height);
+        this.newX = Math.random() * (canvasWidth - this.width);
+        this.newY = Math.random() * (canvasHeight * this.height);
         this.speed = Math.random() * 4 + 1;
         this.frame = 0;
         this.flapSpeed = Math.floor(Math.random() * 3 + 1);
+        this.interval = Math.floor(Math.random() * 200 + 250); // random amounts to divide from the gameFrame to adjust the reset rate of sprites.
        
     }
     update() {
         //this.x = 0;
         //this.y = 0;
-        if(gameFrame % 30 === 0){
-            this.newX = Math.random() * (canvas.width - this.width);
-            this.newY = Math.random() * (canvas.height * this.height);
+        if(gameFrame % this.interval === 0){ // every this.interval of the gameframe the x and y on sprites will reposition
+            this.newX = Math.random() * (canvasWidth - this.width);
+            this.newY = Math.random() * (canvasHeight - this.height);
         }
+        let dx = this.x - this.newX; // gets the distance between  x and new x 
+        let dy = this.y - this.newY; // gets this distance between y and new Y
+        this.x -= dx/70;
+        this.y -= dy/70;
+    
        if(this.x + this.width < 0) this.x = canvas.width;
         //animate the sprites
         if (gameFrame % this.flapSpeed === 0) {
