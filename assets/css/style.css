@@ -13,7 +13,7 @@ ul {
 }
 
 #link li a {
-    font-size: 25px;
+    font-size: 15px;
     text-decoration: none;
     color: green;
 }
@@ -85,7 +85,17 @@ option {
     margin-top: 100px;
 }
 
-
+/* Trigger Animation CSS */
+#canvas4{
+    border: 3px solid black;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    width:700px;
+    background-color: black;
+}
 
 /*dog animation media screen*/
 @media screen and (max-width:500px) {
