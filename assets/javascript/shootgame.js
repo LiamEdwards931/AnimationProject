@@ -34,7 +34,8 @@ class Raven {
         this.maxFrame = 4; //last animation frame for the raven.
         this.timeSinceFlap = 0;
         this.flapInterval = Math.random() * 50 + 50; // randomises the flapping speeds of the birds. 
-        this.randomColors = [];
+        this.randomColors = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]; // gives random RGB values
+        this.color = 'rgb(' + this.randomColors[0] + ',' + this.randomColors[1] + ',' + this.randomColors[2] + ')'; //adds the 3 colors by index and creates a string
     }
     update(deltatime) {
         if (this.y < 0 || this.y > canvas.height - this.height) { // if statement to make birds bounce off the top and bottom of screen
@@ -57,7 +58,8 @@ class Raven {
 
     }
     draw() {
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height); // draws colored rectangles around the sprites for hitbox purposes
         ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
@@ -70,6 +72,11 @@ function drawScore() {
     ctx.fillStyle = 'white';
     ctx.fillText('Score:' + score, 53, 78);
 }
+
+window.addEventListener('click', function (a) {
+    const detectPixelColor = ctx.getImageData(a.x, a.y, 1, 1);
+});
+
 /**
  * 
  * Function that continuously loops ravens on to the screen and deletes the ones that leave the screen.
@@ -82,6 +89,9 @@ function animate(timestamp) {
     if (timeToNextRaven > ravenInterval) {
         ravens.push(new Raven());
         timeToNextRaven = 0;
+        ravens.sort(function (a, b) {
+            return a.width - b.width; // sorts the ravens into size in the array;
+        });
     }
     drawScore();
     [...ravens].forEach(object => object.update(deltatime));
