@@ -98,20 +98,25 @@ option {
 }
 
 /*Shoot game CSS */
-/*#shootinggame {
+#shootinggame {
     background: linear-gradient(to bottom, black, red, black);
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-}*/
+}
 
 #canvas5,
-#collisonCanvas {
+#collisionCanvas {
     position: absolute;
-    top: 120px;
+    top: 150px;
     left: 0;
     width: 100%;
     height: 100%;
+    border: 1px solid black;
+}
+
+#collisionCanvas {
+    opacity: 0;
 }
 
 

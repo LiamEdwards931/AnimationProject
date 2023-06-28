@@ -25,7 +25,7 @@ class Raven {
         this.height = this.spriteHeight * this.sizeModifier; // spritesheet Height.
         this.x = canvas.width;
         this.y = Math.random() * (canvas.height - this.height); // creates raven at random y co-ordinates on the page
-        this.directionX = Math.random() * 5 + 3; // Move speed of the ravens
+        this.directionX = Math.random() * 5 + 2; // Move speed of the ravens
         this.directionY = Math.random() * 5 - 2.5; // bounces of ravens
         this.image = new Image();
         this.image.src = "assets/enemyimages/raven.png";
@@ -58,8 +58,8 @@ class Raven {
 
     }
     draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height); // draws colored rectangles around the sprites for hitbox purposes
+        collisionCtx.fillStyle = this.color;
+        collisionCtx.fillRect(this.x, this.y, this.width, this.height); // draws colored rectangles around the sprites for hitbox purposes
         ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
@@ -73,8 +73,16 @@ function drawScore() {
     ctx.fillText('Score:' + score, 53, 78);
 }
 
-window.addEventListener('click', function (a) {
-    const detectPixelColor = ctx.getImageData(a.x, a.y, 1, 1);
+window.addEventListener('click', function (e) {
+    const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
+    const pc = detectPixelColor.data;
+    console.log(detectPixelColor);
+    ravens.forEach(object => {
+        if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && object.randomColors[2] === pc[2]) {
+            object.markForDelete = true;
+            score++;
+        }
+    });
 });
 
 /**
@@ -83,6 +91,7 @@ window.addEventListener('click', function (a) {
  */
 function animate(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
     let deltatime = timestamp - lastTime;
     lastTime = timestamp;
     timeToNextRaven += deltatime;
