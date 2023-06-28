@@ -99,7 +99,7 @@ option {
 
 /*Shoot game CSS */
 #shootinggame {
-    background: linear-gradient(to bottom, black, red, black);
+    background: linear-gradient(120deg, black, red, black);
     width: 100vw;
     height: 100vh;
     overflow: hidden;

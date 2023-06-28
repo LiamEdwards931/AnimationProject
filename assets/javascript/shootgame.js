@@ -27,7 +27,7 @@ class Raven {
         this.height = this.spriteHeight * this.sizeModifier; // spritesheet Height.
         this.x = canvas.width;
         this.y = Math.random() * (canvas.height - this.height); // creates raven at random y co-ordinates on the page
-        this.directionX = Math.random() * 5 + 2; // Move speed of the ravens
+        this.directionX = Math.random() * 5 + 3; // Move speed of the ravens
         this.directionY = Math.random() * 5 - 2.5; // bounces of ravens
         this.image = new Image();
         this.image.src = "assets/enemyimages/raven.png";
@@ -112,6 +112,8 @@ function drawGameOver() {
     ctx.textAlign = 'center';
     ctx.fillStyle = 'black';
     ctx.fillText('Game Over, You Scored:' + score, canvas.width / 2, canvas.height / 2);
+    ctx.fillStyle = 'white';
+    ctx.fillText('Game Over, You Scored:' + score, canvas.width / 2, canvas.height / 2 + 3);
 }
 
 window.addEventListener('click', function (e) {
