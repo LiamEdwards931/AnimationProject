@@ -86,15 +86,31 @@ option {
 }
 
 /* Trigger Animation CSS */
-#canvas4{
+#canvas4 {
     border: 3px solid black;
     position: absolute;
-    left:50%;
-    top:50%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
-    height: 500px;
-    width:700px;
+    height: 100%;
+    width: 100%;
     background-color: black;
+}
+
+/*Shoot game CSS */
+#shootinggame {
+    background: linear-gradient(to bottom, black, red, black);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#canvas5 {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /*dog animation media screen*/
