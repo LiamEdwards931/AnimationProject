@@ -1,8 +1,15 @@
 const canvas = document.getElementById('canvas5');
-ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+//collision canvas
+const collisionCanvas = document.getElementById('collisionCanvas');
+const collisionCtx = collisionCanvas.getContext('2d');
+collisionCanvas.width = window.innerWidth;
+collisionCanvas.height = window.innerHeight;
 
+let score = 0; // variable score that will increase when ravens are hit
+ctx.font = '50px Imperial';
 let timeToNextRaven = 0; //This works with the timestamp in the animate function to check when to push the next raven by checking how many ms between raven frames
 let ravenInterval = 1000; // variable for ms between spawn times.
 let lastTime = 0;
@@ -27,6 +34,7 @@ class Raven {
         this.maxFrame = 4; //last animation frame for the raven.
         this.timeSinceFlap = 0;
         this.flapInterval = Math.random() * 50 + 50; // randomises the flapping speeds of the birds. 
+        this.randomColors = [];
     }
     update(deltatime) {
         if (this.y < 0 || this.y > canvas.height - this.height) { // if statement to make birds bounce off the top and bottom of screen
@@ -54,6 +62,15 @@ class Raven {
     }
 }
 /**
+ * Draws the scores for the game
+ */
+function drawScore() {
+    ctx.fillStyle = 'black';
+    ctx.fillText('Score:' + score, 50, 75);
+    ctx.fillStyle = 'white';
+    ctx.fillText('Score:' + score, 53, 78);
+}
+/**
  * 
  * Function that continuously loops ravens on to the screen and deletes the ones that leave the screen.
  */
@@ -66,6 +83,7 @@ function animate(timestamp) {
         ravens.push(new Raven());
         timeToNextRaven = 0;
     }
+    drawScore();
     [...ravens].forEach(object => object.update(deltatime));
     [...ravens].forEach(object => object.draw());
     ravens = ravens.filter(object => !object.markForDelete);
