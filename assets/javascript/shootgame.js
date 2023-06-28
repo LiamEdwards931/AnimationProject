@@ -9,13 +9,15 @@ collisionCanvas.width = window.innerWidth;
 collisionCanvas.height = window.innerHeight;
 
 let score = 0; // variable score that will increase when ravens are hit
+let gameOver = false; // variable for triggering gameOver
+
+//font for the score
 ctx.font = '50px Imperial';
+//Raven Code
 let timeToNextRaven = 0; //This works with the timestamp in the animate function to check when to push the next raven by checking how many ms between raven frames
 let ravenInterval = 1000; // variable for ms between spawn times.
 let lastTime = 0;
-
 let ravens = [];
-
 class Raven {
     constructor() {
         this.spriteWidth = 271;
@@ -54,8 +56,7 @@ class Raven {
             else this.frame++;
             this.timeSinceFlap = 0; //resets the flap time back to 0;
         }
-
-
+        if (this.x < 0 - this.width) gameOver = true; // if bird makes it to 0 co-ordinate of x gameOver will be true
     }
     draw() {
         collisionCtx.fillStyle = this.color;
@@ -63,6 +64,40 @@ class Raven {
         ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
     }
 }
+//explosion code
+let explosions = [];
+class Explosion {
+    constructor(x, y, size) {
+        this.image = new Image();
+        this.image.src = 'assets/spritesheets/boom.png';
+        this.spriteWidth = 200;
+        this.spriteHeight = 179;
+        this.size = size;
+        this.x = x;
+        this.y = y;
+        this.frame = 0;
+        this.sound = new Audio();
+        this.sound.src = 'assets/sfx/Ice attack 2.wav';
+        this.timeSinceLastFrame = 0;
+        this.frameInterval = 250; //animation speed of the explosion
+        this.markForDelete = false;
+    }
+    // animates the explosons + plays sound when frame hits 0;
+    update(deltatime) {
+        if (this.frame === 0) this.sound.play();
+        this.timeSinceLastFrame += deltatime;
+        if (this.timeSinceLastFrame > this.frameInterval) {
+            this.frame++;
+            this.timeSinceLastFrame = 0;
+        }
+        //deletes the explosion on frame 5
+        if (this.frame > 5) this.markForDelete = true;
+    }
+    draw() {
+        ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.size, this.size);
+    }
+}
+
 /**
  * Draws the scores for the game
  */
@@ -73,6 +108,12 @@ function drawScore() {
     ctx.fillText('Score:' + score, 53, 78);
 }
 
+function drawGameOver() {
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'black';
+    ctx.fillText('Game Over, You Scored:' + score, canvas.width / 2, canvas.height / 2);
+}
+
 window.addEventListener('click', function (e) {
     const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
     const pc = detectPixelColor.data;
@@ -81,6 +122,8 @@ window.addEventListener('click', function (e) {
         if (object.randomColors[0] === pc[0] && object.randomColors[1] === pc[1] && object.randomColors[2] === pc[2]) {
             object.markForDelete = true;
             score++;
+            explosions.push(new Explosion(object.x, object.y, object.width));
+            console.log(explosions);
         }
     });
 });
@@ -103,10 +146,13 @@ function animate(timestamp) {
         });
     }
     drawScore();
-    [...ravens].forEach(object => object.update(deltatime));
-    [...ravens].forEach(object => object.draw());
+    [...ravens, ...explosions].forEach(object => object.update(deltatime));
+    [...ravens, ...explosions].forEach(object => object.draw());
     ravens = ravens.filter(object => !object.markForDelete);
-    requestAnimationFrame(animate);
+    explosions = explosions.filter(object => !object.markForDelete);
+    if (!gameOver) requestAnimationFrame(animate); // if to check if gameOver is false, if it's true game will end.
+    else drawGameOver();
 }
+
 
 animate(0); // the 0 is here because timestamp needs a starting value to run the IF correctly otherwise it starts as undefined.
