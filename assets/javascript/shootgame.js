@@ -55,6 +55,7 @@ class Raven {
             if (this.frame > this.maxFrame) this.frame = 0; // resets the loops on the spritesheet to animate.
             else this.frame++;
             this.timeSinceFlap = 0; //resets the flap time back to 0;
+            particles.push(new Particle(this.x, this.y, this.width, this.color));
         }
         if (this.x < 0 - this.width) gameOver = true; // if bird makes it to 0 co-ordinate of x gameOver will be true
     }
@@ -97,7 +98,33 @@ class Explosion {
         ctx.drawImage(this.image, this.frame * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.size, this.size);
     }
 }
-
+// create a trail of color behind each raven.
+let particles = [];
+class Particle {
+    constructor(x, y, size, color) {
+        this.size = size;
+        this.x = x + this.size / 2; // positions the particle trail horizontal
+        this.y = y + this.size / 3;
+        this.radius = Math.random() * this.size / 10; // particle radius 
+        this.maxRadius = Math.random() * 20 + 35; // maximum radius of the particles
+        this.markForDelete = false; // deletes the particle if true
+        this.speedX = Math.random() * 1 + 0.5; // speed of particles
+        this.color = color; // color variable will be set by raven class
+    }
+    update() {
+        this.x += this.speedX;
+        this.radius += 0.2;
+        if (this.radius > this.maxRadius) { // will delete particles if they exceed the max particle radius 
+            this.markForDelete = true;
+        }
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
 /**
  * Draws the scores for the game
  */
@@ -148,10 +175,11 @@ function animate(timestamp) {
         });
     }
     drawScore();
-    [...ravens, ...explosions].forEach(object => object.update(deltatime));
-    [...ravens, ...explosions].forEach(object => object.draw());
+    [...particles, ...ravens, ...explosions].forEach(object => object.update(deltatime)); // calls each object
+    [...particles, ...ravens, ...explosions].forEach(object => object.draw());
     ravens = ravens.filter(object => !object.markForDelete);
     explosions = explosions.filter(object => !object.markForDelete);
+    particles = particles.filter(object => !object.markForDelete);
     if (!gameOver) requestAnimationFrame(animate); // if to check if gameOver is false, if it's true game will end.
     else drawGameOver();
 }
