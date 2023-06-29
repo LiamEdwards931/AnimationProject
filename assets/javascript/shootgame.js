@@ -38,6 +38,7 @@ class Raven {
         this.flapInterval = Math.random() * 50 + 50; // randomises the flapping speeds of the birds. 
         this.randomColors = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)]; // gives random RGB values
         this.color = 'rgb(' + this.randomColors[0] + ',' + this.randomColors[1] + ',' + this.randomColors[2] + ')'; //adds the 3 colors by index and creates a string
+        this.hasTrail = Math.random() > 0.5;
     }
     update(deltatime) {
         if (this.y < 0 || this.y > canvas.height - this.height) { // if statement to make birds bounce off the top and bottom of screen
@@ -55,7 +56,12 @@ class Raven {
             if (this.frame > this.maxFrame) this.frame = 0; // resets the loops on the spritesheet to animate.
             else this.frame++;
             this.timeSinceFlap = 0; //resets the flap time back to 0;
-            particles.push(new Particle(this.x, this.y, this.width, this.color));
+            if (this.hasTrail) {
+                for (let i = 0; i < 5; i++) { // adds 5 trails of particles with a for loop.
+                    particles.push(new Particle(this.x, this.y, this.width, this.color));
+                }
+
+            };
         }
         if (this.x < 0 - this.width) gameOver = true; // if bird makes it to 0 co-ordinate of x gameOver will be true
     }
@@ -108,21 +114,24 @@ class Particle {
         this.radius = Math.random() * this.size / 10; // particle radius 
         this.maxRadius = Math.random() * 20 + 35; // maximum radius of the particles
         this.markForDelete = false; // deletes the particle if true
-        this.speedX = Math.random() * 1 + 0.5; // speed of particles
+        this.speedX = Math.random() * 1 + 0.3; // speed of particles
         this.color = color; // color variable will be set by raven class
     }
     update() {
         this.x += this.speedX;
-        this.radius += 0.2;
-        if (this.radius > this.maxRadius) { // will delete particles if they exceed the max particle radius 
+        this.radius += 0.5; // adds smaller particles into bigger radius
+        if (this.radius > this.maxRadius - 5) { // will delete particles if they exceed the max particle radius 
             this.markForDelete = true;
         }
     }
     draw() {
+        ctx.save();
+        ctx.globalAlpha = 1 - this.radius / this.maxRadius; // trails the particles from opaque to transparent
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
     }
 }
 /**
