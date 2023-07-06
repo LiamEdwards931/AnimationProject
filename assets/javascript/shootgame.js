@@ -138,6 +138,7 @@ class Particle {
  * Draws the scores for the game
  */
 function drawScore() {
+    ctx.textAlign = 'left';
     ctx.fillStyle = 'black';
     ctx.fillText('Score:' + score, 50, 75);
     ctx.fillStyle = 'white';
@@ -148,8 +149,10 @@ function drawGameOver() {
     ctx.textAlign = 'center';
     ctx.fillStyle = 'black';
     ctx.fillText('Game Over, You Scored:' + score, canvas.width / 2, canvas.height / 2);
+    ctx.fillText('click to restart', canvas.width / 2, canvas.height / 3);
     ctx.fillStyle = 'white';
     ctx.fillText('Game Over, You Scored:' + score, canvas.width / 2, canvas.height / 2 + 3);
+    ctx.fillText('click to restart', canvas.width / 2, canvas.height / 3 + 3);
 }
 
 window.addEventListener('click', function (e) {
@@ -162,9 +165,21 @@ window.addEventListener('click', function (e) {
             score++;
             explosions.push(new Explosion(object.x, object.y, object.width));
             console.log(explosions);
+        } else if (gameOver) {
+            restartGame();
         }
+
     });
 });
+/**
+ * Restarts the game
+ */
+function restartGame() {
+    gameOver = false;
+    ravens = [];
+    score = 0;
+    animate(0);
+};
 
 /**
  * 
@@ -191,6 +206,7 @@ function animate(timestamp) {
     particles = particles.filter(object => !object.markForDelete);
     if (!gameOver) requestAnimationFrame(animate); // if to check if gameOver is false, if it's true game will end.
     else drawGameOver();
+
 }
 
 
